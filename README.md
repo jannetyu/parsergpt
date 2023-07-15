@@ -175,3 +175,31 @@ print(completion.choices[0].message)
 
 
 ```
+
+#### Please note we already have a fairly advanced ingredients parser
+
+[API Code for Ingredients parser](https://github.com/Smarter-Sorting/chemical-delphi/blob/21a23926494a7e8cf91e3273b7d74f599d5e39e2/ss/delphi/apps/pfc/app.py#L606C24-L606C24)
+
+[the code base](https://github.com/Smarter-Sorting/chemical-delphi/blob/21a23926494a7e8cf91e3273b7d74f599d5e39e2/ss/delphi/services/pfc/ingredients/ingredients_blending.py)
+
+```
+import requests
+import json
+
+url = "http://interpreters.production.sorting.tech/delphi/one_pager/ingredient_input"
+
+payload = json.dumps({
+  "accept_fuzzy_matches": True,
+  "ingredient_text_input": "with Real Chicken, Tomatoes, Carrots & Wild Rice: Chicken Broth, Chicken, Wheat Gluten, Liver, Meat By-Products, Tomatoes, Carrots, Wild Rice, Corn Starch-Modified, Soy Flour, Minerals [Potassium Chloride, Zinc Sulfate, Ferrous Sulfate, Copper Sulfate, Manganese Sulfate, Potassium Iodide, Sodium Selenite], Tricalcium Phosphate, Choline Chloride, Vitamins [Vitamin E Supplement, Niacin (Vitamin B-3), Thiamine Mononitrate (Vitamin B-1), Calcium Pantothenate (Vitamin B-5), Pyridoxine Hydrochloride (Vitamin B-6), Vitamin B-12 Supplement, Riboflavin Supplement (Vitamin B-2), Vitamin A Supplement, Folic Acid (Vitamin B-9), Vitamin D-3 Supplement, Biotin (Vitamin B-7)]. With Real Beef, Tomatoes, Carrots & Wild Rice: Beef Broth, Beef, Wheat Gluten, Liver, Meat By-Products, Tomatoes, Carrots, Wild Rice, Corn Starch-Modified, Soy Flour, Minerals [Potassium Chloride, Zinc Sulfate, Ferrous Sulfate, Copper Sulfate, Manganese Sulfate, Potassium Iodide, Sodium Selenite], Tricalcium Phosphate, Choline Chloride, Vitamins [Vitamin E Supplement, Niacin (Vitamin B-3), Thiamine Mononitrate (Vitamin B-1), Calcium Pantothenate (Vitamin B-5), Pyridoxine Hydrochloride (Vitamin B-6), Vitamin B-12 Supplement, Riboflavin Supplement (Vitamin B-2), Vitamin A Supplement, Folic Acid (Vitamin B-9), Vitamin D-3 Supplement, Biotin (Vitamin B-7)]. With Real Salmon, Tomatoes, Carrots & Wild Rice: Chicken Broth, Chicken, Wheat Gluten, Liver, Salmon, Tomatoes, Meat By-Products, Carrots, Wild Rice, Corn Starch-Modified, Soy Flour, Minerals [Potassium Chloride, Zinc Sulfate, Ferrous Sulfate, Copper Sulfate, Manganese Sulfate, Potassium Iodide, Sodium Selenite], Tricalcium Phosphate, Choline Chloride, Vitamins [Vitamin E Supplement, Niacin (Vitamin B-3), Thiamine Mononitrate (Vitamin B-1), Calcium Pantothenate (Vitamin B-5), Pyridoxine Hydrochloride (Vitamin B-6), Vitamin B-12 Supplement, Riboflavin Supplement (Vitamin B-2), Vitamin A Supplement, Folic Acid (Vitamin B-9), Vitamin D-3 Supplement, Biotin (Vitamin B-7)]. With Real Beef: Beef Broth, Beef, Wheat Gluten, Liver, Meat By-Products, Tomatoes, Carrots, Wild Rice, Corn Starch-Modified, Soy Flour, MINERALS [Potassium Chloride, Zinc Sulfate, Ferrous Sulfate, Copper Sulfate, Manganese Sulfate, Potassium Iodide, Sodium Selenite], Tricalcium Phosphate, Choline Chloride, VITAMINS [Vitamin E Supplement, Niacin (Vitamin B-3), Thiamine Mononitrate (Vitamin B-1), Calcium Pantothenate (Vitamin B-5), Pyridoxine Hydrochloride (Vitamin B-6), Vitamin B-12 Supplement, Riboflavin Supplement (Vitamin B-2), Vitamin A Supplement, Folic Acid (Vitamin B-9), Vitamin D-3 Supplement, Biotin (Vitamin B-7)]. D407420; With Real Chicken: Chicken Broth, Chicken, Wheat Gluten, Liver, Meat By-Products, Tomatoes, Carrots, Wild Rice, Corn Starch-Modified, Soy Flour, MINERALS [Potassium Chloride, Zinc Sulfate, Ferrous Sulfate, Copper Sulfate, Manganese Sulfate, Potassium Iodide, Sodium Selenite], Tricalcium Phosphate, Choline Chloride, VITAMINS [Vitamin E Supplement, Niacin (Vitamin B-3), Thiamine Mononitrate (Vitamin B-1), Calcium Pantothenate (Vitamin B-5), Pyridoxine Hydrochloride (Vitamin B-6), Vitamin B-12 Supplement, Riboflavin Supplement (Vitamin B-2), Vitamin A Supplement, Folic Acid (Vitamin B-9), Vitamin D-3 Supplement, Biotin (Vitamin B-7)]. D407520; With Real Salmon: Chicken Broth, Chicken, Wheat Gluten, Liver, Salmon, Tomatoes, Meat By-Products, Carrots, Wild Rice, Corn Starch-Modified, Soy Flour, Minerals [Potassium Chloride, Zinc Sulfate, Ferrous Sulfate, Copper Sulfate, Manganese Sulfate, Potassium Iodide, Sodium Selenite], Tricalcium Phosphate, Choline Chloride, Vitamins [Vitamin E Supplement, Niacin (Vitamin B-3), Thiamine Mononitrate (Vitamin B-1), Calcium Pantothenate (Vitamin B-5), Pyridoxine Hydrochloride (Vitamin B-6), Vitamin B-12 Supplement, Riboflavin Supplement (Vitamin B-2), Vitamin A Supplement, Folic Acid (Vitamin B-9), Vitamin D-3 Supplement, Biotin (Vitamin B-7)]. D407620"
+})
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic YXBpLXVzZXI6Rk9rJEF6NWg2QVR6VkpXZjkzYSM='
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+
+```

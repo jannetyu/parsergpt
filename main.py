@@ -7,6 +7,8 @@ import openai
 import json
 import pandas as pd
 import snowflake.connector
+import requests
+from snowflake.snowpark import *
 #from snowflake.snowpark.sql import *
 #from snowpark import Session
 
@@ -202,3 +204,20 @@ print("openai response:")
 # print this pretty json
 #print(json.dumps(completion, indent=4, sort_keys=True))
 print(completion.choices[0].message.content)
+
+
+# existing smarterX parser
+url = "http://interpreters.production.sorting.tech/delphi/one_pager/ingredient_input"
+
+payload = json.dumps({
+  "accept_fuzzy_matches": True,
+  "ingredient_text_input": f"{ingredientsList}"
+})
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic YXBpLXVzZXI6Rk9rJEF6NWg2QVR6VkpXZjkzYSM='
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
