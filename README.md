@@ -141,7 +141,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 source='dataRecord' #or image if parsing images
 
-dataPrompt=f'''Parse the following list of ingredients by UPC from the packaging of a consumer packaged goods. Only get valid ingredients, do not include words like "ingredients".   Extract the name of the ingredient, the unit, and the amount and type whether active or inactive. If active or inactive is not declared, assume active.  If units is not present assume 'n/a' and if amount is not present assume 0.  Include the source of {source}.  Include in a notes field anything that seemed odd, if anything.
+dataPrompt=f'''Parse the following list of ingredients by UPC for upc {upc} from the packaging of a consumer packaged goods. Only get valid ingredients, do not include words like "ingredients".   Extract the name of the ingredient, the unit, and the amount and type whether active or inactive. If active or inactive is not declared, assume active.  If units is not present assume 'n/a' and if amount is not present assume 0.  Include the source of {source}.  Include in a notes field anything that seemed odd, if anything.
 
 Return results as JSON:
 {"UPC":
@@ -158,6 +158,9 @@ Return results as JSON:
         "notes":"anything that needs to be looked at by a human"
     }
 }
+
+here is the ingredients list:
+{ingredientsList}
 '''
 
 completion = openai.ChatCompletion.create(
