@@ -168,7 +168,13 @@ print(product_name)
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 source='dataRecord' #or image if parsing images
 
-dataPrompt=f'''Parse the following list of ingredients by UPC for upc {upc} from the packaging of a consumer packaged goods. Only get valid ingredients, do not include words like "ingredients".   Extract the name of the ingredient, the unit, and the amount and type whether active or inactive. If active or inactive is not declared, assume active.  If units is not present assume 'n/a' and if amount is not present assume 0.  List my indicate a serving concept like "In Each Tablet" or "per spray" - include this as servingIndicator. Include the source as {source}.  Include in a notes field anything that seemed odd, if anything.
+dataPrompt=f'''Given an ingredient list and product category for a product labeled by UPC {upc}, classify and parse the ingredients corresponding to the specified consumer packaged goods (CPG) category. Categories can include food, pharmaceutical, cosmetic, electronic, automotive, and so forth.
+Compile the parsed data into a table with the following columns: ‘Ingredient Name’, ‘Amount’, ‘Unit’, ‘Type’, ‘Allergen/Hazard’, ‘ServingIndicator’, ‘Source’, ‘Notes’, and ‘Concerns’.
+For ‘Type’, assign ‘active’, ‘inactive’, ‘primary’, ‘secondary’, ‘main’, or ‘sub’ based on category-specific classifications. If not outlined, default to ‘main’ for food, ‘primary’ for electronics, and ‘active’ for other categories.
+In the ‘Allergen/Hazard’ column, mark any identified potential allergens or similar hazardous components. For ‘Amount’ and ‘Unit’, record the given values, or otherwise note as ‘n/a’ and ‘0’.
+Under ‘ServingIndicator’, log any serving guide (e.g., ‘Per Capsule’, ‘Each Tablet’). Set {source} as the ‘Source’ of data, such as ‘packaging’, ‘manufacturer website’, ‘FDA database’, etc.
+In the ‘Notes’ section, report peculiarities or uncertainties during parsing. In ‘Concerns’, capture any potential issues or missing information about the ingredient.
+Finally, if applicable, indicate any certifications (e.g., ‘USDA organic’, ‘Non GMO project verified’) and the usage context (e.g., ‘Internal Use’, ‘External Use’, ‘Single Use’, ‘Multiple Use’).
 
 Return results as JSON:
 {{"{upc}":
